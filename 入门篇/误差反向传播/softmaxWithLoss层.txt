@@ -1,0 +1,15 @@
+class SoftmaxWithLoss(object):
+    def __init__(self):
+        self.t = None
+        self.y = None
+        
+    def forward(self, x, t):
+        self.t = t
+        self.y = softmax(x)
+        return cross_entropy_error(self.y, self.t)
+    
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
+        
+        return dx
